@@ -30,8 +30,8 @@ public getDB(){
   private criarTabelas(db:SQLiteObject) {
     db.sqlBatch([
 
-      ['CREATE TABLE IF NOT EXISTS contas (id integer primary key AUTOINCREMENT NOT NULL, descricao TEXT )']
-      
+      ['CREATE TABLE IF NOT EXISTS contas (id integer primary key AUTOINCREMENT NOT NULL, descricao TEXT )'],
+      ['CREATE TABLE IF NOT EXISTS lancamentos (id integer primary key AUTOINCREMENT NOT NULL, descricao TEXT, valor REAL, data TEXT, conta TEXT, entradaSaida TEXT, pago TEXT)']
     ])
     .then(() => console.log('Tabelas criadas'))
     .catch(e => console.error('Erro ao criar as tabelas',e));

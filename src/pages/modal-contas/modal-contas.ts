@@ -1,6 +1,9 @@
+import { ContasProvider } from './../../providers/contas/contas';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController } from 'ionic-angular';
 import { PARAMETERS } from '@angular/core/src/util/decorators';
+import { Conta } from '../../providers/contas/contas';
+import { ContasPage } from '../contas/contas';
 
 
 
@@ -12,25 +15,38 @@ import { PARAMETERS } from '@angular/core/src/util/decorators';
 export class ModalContasPage {
 
   view: any;
-  conta: any;
-  viewCtrl: any;
+  classeConta: Conta
 
-  constructor( viewCtrl: ViewController, params: NavParams) {
-
-    this.view = viewCtrl;
-    this.conta = params.get("parametro") || {descricao: ""};
-
+  constructor( 
+    public navCtrl: NavController, 
+    public params: NavParams,
+    private providerContas:ContasProvider,
+    private toast:ToastController
+    ) {
+    
+    this.classeConta = new Conta();
   }
 
   cancel(){
     this.view.dismiss();
   }
-  salvar(){
-    this.view.dismiss(this.conta);
+  save() {
+    this.salvarConta()
+      .then(() => {
+        this.toast.create({ message: 'Conta salva.', duration: 3000, position: 'botton' }).present();
+        this.navCtrl.pop();
+        this.navCtrl.push(ContasPage);
+      })
+      .catch(() => {
+        this.toast.create({ message: 'Erro ao salvar a conta.', duration: 3000, position: 'botton' }).present();
+      });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ModalContasPage');
-  }
-
+private salvarConta(){
+  return this.providerContas.insert(this.classeConta);
 }
+
+
+  }
+
+

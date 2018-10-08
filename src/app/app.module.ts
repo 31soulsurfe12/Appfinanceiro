@@ -15,6 +15,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ContasProvider } from '../providers/contas/contas';
 import { SQLite } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../providers/database/database';
+import { LancamentosProvider } from '../providers/lancamentos/lancamentos';
+import { LancamentosPage } from '../pages/lancamentos/lancamentos';
+import { ModalLancamentosPage } from '../pages/modal-lancamentos/modal-lancamentos';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { DatabaseProvider } from '../providers/database/database';
     HomePage,
     TabsPage,
     ContasPage,
-    ModalContasPage
+    ModalContasPage,
+    LancamentosPage,
+    ModalLancamentosPage,
+    
   ],
   imports: [
     BrowserModule,
@@ -38,7 +44,10 @@ import { DatabaseProvider } from '../providers/database/database';
     HomePage,
     TabsPage,
     ContasPage,
-    ModalContasPage
+    ModalContasPage,
+    LancamentosPage,
+    ModalLancamentosPage,
+    
   ],
   providers: [
     StatusBar,
@@ -47,7 +56,10 @@ import { DatabaseProvider } from '../providers/database/database';
     {provide: LOCALE_ID, useValue: 'pt-BR'},
     ContasProvider,
     SQLite,
-    DatabaseProvider
+    DatabaseProvider,
+    LancamentosProvider,
+    
+    
   ]
 })
 export class AppModule {}

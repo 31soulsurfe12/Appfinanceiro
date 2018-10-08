@@ -1,7 +1,7 @@
 import { HomePage } from './../pages/home/home';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
-
+import { LancamentosPage } from '../pages/lancamentos/lancamentos';
 import { ContasPage } from '../pages/contas/contas';
 
 @Component({
@@ -11,6 +11,7 @@ export class MyApp {
   rootPage:any = HomePage;
   home:any = HomePage;
   contas:any = ContasPage;
+  lancamentos:any = LancamentosPage
 
   constructor(platform: Platform) {
     platform.ready().then(() => {
