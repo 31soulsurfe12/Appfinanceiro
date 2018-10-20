@@ -11,4 +11,14 @@ export class HomePage {
 
   }
 
+
+  abrirSaldo(){
+    
+    this.navCtrl.push('SaldoPage');
+  }
+
+  abrirContas(){
+    this.navCtrl.push('ContasPage');
+  }
+
 }

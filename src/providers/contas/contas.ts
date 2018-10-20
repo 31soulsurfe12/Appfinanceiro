@@ -1,7 +1,6 @@
-import { SQLiteObject } from '@ionic-native/sqlite';
-
-import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
+import 'rxjs/add/operator/map';
+import { SQLiteObject } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../database/database';
 
 /*
@@ -12,20 +11,22 @@ import { DatabaseProvider } from '../database/database';
 */
 @Injectable()
 export class ContasProvider {
+  
+  list:any = [];
 
-  list:any [];
 
   constructor(private dbProvider:DatabaseProvider) {
-    dbProvider.criarDatabse();
-           
+    
+   dbProvider.criarDatabase();
+
   }
+
   public getAll(){
     return this.dbProvider.getDB()
     .then((db: SQLiteObject) => {
       let sql = 'SELECT * from contas';
      
-
-    return db.executeSql(sql,)
+    return db.executeSql(sql, [])
 
     .then((data: any) => {
       if(data.rows.length > 0){
@@ -48,36 +49,44 @@ export class ContasProvider {
   .catch((e) => console.error(e));
   }
 
- insert(conta:Conta){
-   return this.dbProvider.getDB()
-   .then((db: SQLiteObject) => {
-     let sql = 'insert into contas (descricao) values(?)';
-     let data = [conta.descricao];
-     return db.executeSql(sql,data)
+  insert(conta:Conta){
+    return this.dbProvider.getDB()
+    .then((db: SQLiteObject) => {
+    let sql = 'insert into contas (descricao) values (?)';
+    let data = [conta.descricao];
+    return db.executeSql(sql, data)
+  
+    .catch((e) => console.error(e));
 
-     .catch((e) => console.error(e));
+    })
+  .catch((e) => console.error(e));  
+  }
 
-   })
-     .catch((e) => console.error(e));
- }
- edit(conta){
+  edit(conta){
 
- }
- public remove(id:number){
-  return this.dbProvider.getDB()
-  .then((db: SQLiteObject) => {
-  let sql = 'delete from contas where id = ?';
-  let data = [id];
-  return db.executeSql(sql, data)
+  }
 
-  .catch((e) => console.error(e));
 
-  })
-.catch((e) => console.error(e)); 
+  public remove(id:number){
+    return this.dbProvider.getDB()
+    .then((db: SQLiteObject) => {
+    let sql = 'delete from contas where id = ?';
+    let data = [id];
+    return db.executeSql(sql, data)
+  
+    .catch((e) => console.error(e));
+
+    })
+  .catch((e) => console.error(e)); 
+  }
+
+
 }
 
-}
+
+
 export class Conta{
-   id: number;
-   descricao:string;
+  id:number;
+  descricao:string;
+  
 }

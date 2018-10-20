@@ -1,5 +1,5 @@
 <!--
-  Generated template for the LancamentosPage page.
+  Generated template for the ContasPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -10,36 +10,67 @@
     <ion-title>Lançamentos</ion-title>
 
     <button menuToggle>
-     <ion-icon name="menu"></ion-icon>
+        <ion-icon name="menu"></ion-icon>
+  
+      </button>
 
-    </button>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
- <ion-list>
-   <ion-item-sliding *ngFor="let item of lista">
-     <ion-item (click)= "edit(item)">
-     {{item.descricao}}
-   </ion-item>
-     <ion-item-options>
-       <button  (click)="delete(item)" ion-button color="danger">
-         Excluir
-       </button>
-     </ion-item-options>
-   </ion-item-sliding>
- </ion-list>
+    <ion-searchbar (ionInput)="filtrar($event)" [(ngModel)]="searchText"></ion-searchbar>
+  
+    <ion-list>
+        <ion-item-sliding *ngFor="let item of lista">
+         
+            <ion-item  [ngClass]="{entrada: lancamentoEntrada(item), saida: !lancamentoEntrada(item)}" (click)="edit(item.id)">
+                <ion-row>
+                  <ion-col width-67>
+                    <h2>{{item.descricao}}</h2>
+                    <p>
+                      {{item.conta}}
+                    </p>
+                    <p>
+                      {{item.data | date:'dd/MM/yyyy'}}
+        
+                    </p>
+                  </ion-col>
+        
+                  <ion-col width-33>
+                    <p>
+                      {{item.valor | currency:'BRL':true}}
+                    </p>
+                    <p>
+                      <!--STATUS PGTO TEM QUE SER CRIADO COMO PIPES-->
+                      {{item.pago | statusPgto}}
+                    </p>
+                  </ion-col>
+                </ion-row>
+              </ion-item>
+
+          <ion-item-options>
+              <button (click)="changePaymentStatus(item)" ion-button>
+                  <ion-icon name="cash"></ion-icon>
+                </button>
+            <button  (click)="remover(item)" ion-button color="danger">
+              Excluir
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+        <p class="saldo">Saldo: {{saldo | currency:"BRL":true}}</p>
+      </ion-list>
 
 
 
+ <!-- Botão Adicionar Conta -->
+ <ion-fab bottom right >
+    <button ion-fab color="danger" (click)="insert()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
  
 
-<ion-fab bottom right>
-  <button ion-fab color= "danger" (click)="insert()">
-    <ion-icon name="add"></ion-icon>
-  </button>
-</ion-fab>
-
+ 
 </ion-content>

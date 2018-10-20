@@ -1,10 +1,7 @@
-import { ContasProvider } from './../../providers/contas/contas';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ToastController } from 'ionic-angular';
-import { PARAMETERS } from '@angular/core/src/util/decorators';
-import { Conta } from '../../providers/contas/contas';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Conta, ContasProvider } from '../../providers/contas/contas';
 import { ContasPage } from '../contas/contas';
-
 
 
 @IonicPage()
@@ -15,22 +12,27 @@ import { ContasPage } from '../contas/contas';
 export class ModalContasPage {
 
   view: any;
-  classeConta: Conta
 
-  constructor( 
+  classeConta:Conta
+
+
+  constructor(
     public navCtrl: NavController, 
-    public params: NavParams,
+    public navParams: NavParams,
     private providerContas:ContasProvider,
-    private toast:ToastController
-    ) {
+    private toast :ToastController
     
+  ) {
+    
+   
     this.classeConta = new Conta();
   }
 
-  cancel(){
+  cancel() {
     this.view.dismiss();
   }
-  save() {
+
+  salvar() {
     this.salvarConta()
       .then(() => {
         this.toast.create({ message: 'Conta salva.', duration: 3000, position: 'botton' }).present();
@@ -40,13 +42,19 @@ export class ModalContasPage {
       .catch(() => {
         this.toast.create({ message: 'Erro ao salvar a conta.', duration: 3000, position: 'botton' }).present();
       });
+   
   }
 
-private salvarConta(){
-  return this.providerContas.insert(this.classeConta);
+
+  private salvarConta() {
+   
+      return this.providerContas.insert(this.classeConta);
+      
+  }
+
+
+  
+
 }
-
-
-  }
 
 
